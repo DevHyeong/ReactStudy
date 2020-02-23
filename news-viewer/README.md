@@ -1,68 +1,73 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+출처: 리액트를 다루는 기술(개정판) 저자: 김민준
 
-## Available Scripts
+리액트 프로젝트 생성방법
+npm install -g create-react-app
+create-react-app 프로젝트명
+cd 프로젝트명
+npm start
 
-In the project directory, you can run:
+14장 외부 api를 연동하여 뉴스 뷰어 만들기
 
-### `npm start`
+1) styled-components
+참조:https://blog.nerdfactory.ai/2019/10/25/react-styled-components.html
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+2) useState
+useState는 가장 기본적인 Hook으로서, 함수형 컴포넌트에서 상태를 관리해야 되는 일이 발생한다면
+이 Hook을 사용하면 된다.
+ex.
+const [value, setValue] = useState(0); // 비구조화 할당(배열)
+return (
+  <div>
+    <p>
+      현재 카운터 값은 <b>{value}</b> 입니다.
+  </p>
+  <button onClick={()=>setValue(value+1)}>+1</button>
+);
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3) useCallback
+- 렌더링 성능을 최적화해야하는 상황에서 사용
+- 이벤트 핸들러 함수를 필요할때만 생성가능
+- 컴포넌트가 리렌더링될 때마다 함수들이 새로 생성될때 발생하는 비용을 해결하기 위해 사용
 
-### `npm run build`
+ex.
+const onChange = useCallback(e=>{
+	setNumber(e.target.value);
+},[]); // 컴포넌트가 처음 렌더링될때만 함수생성.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+const onInsert = useCallback(()=>{
+	const nextList = list.concat(parseInt(number));
+	setList(nextList);
+	setNumber('');
+},[number,list]); // number 혹은 list가 바뀌었을때만 함수 생성
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4) 비구조화 할당(객체)
+const article = {
+  title:'제목',
+  description: '내용',
+  url: 'https://google.com',
+  urlToImage: 'https://via.placeholder.com'
+};
+const {title, description, url, urlToImage} = article;
 
-### `npm run eject`
+같은 의미
+title = article.title;
+description = article.description;
+url = article.url
+urlToImage = article.urlToImage;
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5) javascript 문자열 ``
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+6) 리액트 라우터
+- 설치: npm install react-router-dom 
+- <Route path="/:category?" component={}/>
+- 물음표 문자는 category 값이 있을 수도 있고 없을 수도 있다는 의미를 말한다.
+- 이 예에서는 category URL 파라미터가 없다면 전체 카테고리를 선택한 것으로 간주하였음.
+- exact의 용도
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+7) usePromise
+- 컴포넌트에서 API 호출처럼 Promise를 사용해야 하는 경우 더욱 간결하게 코드를 작성할 수 있도록 해주는 커스텀 Hook
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
