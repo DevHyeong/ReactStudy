@@ -30,25 +30,27 @@ npm start
 
 
 3) useCallback
-- 렌더링 성능을 최적화해야하는 상황에서 사용
-- 이벤트 핸들러 함수를 필요할때만 생성가능
-- 컴포넌트가 리렌더링될 때마다 함수들이 새로 생성될때 발생하는 비용을 해결하기 위해 사용
 
-- 예시
+	- 렌더링 성능을 최적화해야하는 상황에서 사용
+	- 이벤트 핸들러 함수를 필요할때만 생성가능
+	- 컴포넌트가 리렌더링될 때마다 함수들이 새로 생성될때 발생하는 비용을 해결하기 위해 사용
 
-	const onChange = useCallback(e=>{
-		setNumber(e.target.value);
-	},[]); // 컴포넌트가 처음 렌더링될때만 함수생성.
+	- 예시
+	
+		const onChange = useCallback(e=>{
+			setNumber(e.target.value);
+		},[]); // 컴포넌트가 처음 렌더링될때만 함수생성.
 
-	const onInsert = useCallback(()=>{
-		const nextList = list.concat(parseInt(number));
-		setList(nextList);
-		setNumber('');
-	},[number,list]); // number 혹은 list가 바뀌었을때만 함수 생성
+		const onInsert = useCallback(()=>{
+			const nextList = list.concat(parseInt(number));
+			setList(nextList);
+			setNumber('');
+		},[number,list]); // number 혹은 list가 바뀌었을때만 함수 생성
 
 
 
 4) 비구조화 할당(객체)
+
 	const article = {
 	  title:'제목',
 	  description: '내용',
@@ -69,13 +71,14 @@ npm start
 
 
 6) 리액트 라우터
-- 설치: npm install react-router-dom 
-- <Route path="/:category?" component={}/>
-- 물음표 문자는 category 값이 있을 수도 있고 없을 수도 있다는 의미를 말한다.
-- 이 예에서는 category URL 파라미터가 없다면 전체 카테고리를 선택한 것으로 간주하였음.
-- exact의 용도
+
+	- 설치: npm install react-router-dom 
+	- <Route path="/:category?" component={}/>
+	- 물음표 문자는 category 값이 있을 수도 있고 없을 수도 있다는 의미를 말한다.
+	- 이 예에서는 category URL 파라미터가 없다면 전체 카테고리를 선택한 것으로 간주하였음.
+	- exact의 용도
 
 
 7) usePromise
-- 컴포넌트에서 API 호출처럼 Promise를 사용해야 하는 경우 더욱 간결하게 코드를 작성할 수 있도록 해주는 커스텀 Hook
+	- 컴포넌트에서 API 호출처럼 Promise를 사용해야 하는 경우 더욱 간결하게 코드를 작성할 수 있도록 해주는 커스텀 Hook
 
